@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>Chat App</title>
 	<!-- <link rel="icon" href="C:/Users/S4/Downloads/touchscreen_book_bookmark_ebook_icon_191190.ico">  -->
-	<link rel="stylesheet" href="style.css"> 
+	<link rel="stylesheet" href="bootstrap.css"> 
 </head>
 <!-- Mqtt paho.js file path -->
 <script src="D:Today\MQTT Web Project\paho.javascript-1.0.3\paho-mqtt.js" type="text/javascript"></script>
@@ -86,15 +86,15 @@
 
 	<label for="cb_config">Configure:</label></br>
 	<!-- Settings Div -->
-	<div class="myDiv" id="broker_div"></br>
+	<div class="container" id="broker_div"></br>
 		<h2>Broker Settings</h2>
-		<label class="lbCss">Host:</label>
+		<label>Host:</label>
 		<input type="text" name="txt_Host" id="txt_Host">
-		<label class="lbCss">Port:</label>
+		<label>Port:</label>
 		<input type="text" name="txt_Port" id="txt_Port">
-		<label class="lbCss">Client ID:</label>
+		<label>Client ID:</label>
 		<input type="text" name="txt_CLient" id="txt_CLient">
-		<label class="lbCss">Subscribe:</label>
+		<label>Subscribe:</label>
 		<input type="text" name="txt_Subscribe" id="txt_Subscribe"></br>
 		<input type="button" name="sub_config" id="sub_config" value="Submit" onclick="Host()">
 
@@ -106,7 +106,7 @@
 
 <form>
 
-	<div class="myDiv"></br>
+	<div class="container"></br>
 		<label>Publish Topic:</label>
 		<input type="text" name="txt_Publish" id="txt_Publish"></br>
 		<label>Enter Message:</label></br>
