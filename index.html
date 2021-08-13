@@ -82,9 +82,10 @@
 <h1>Chat App</h1>
 
 <form action="" id="form_Broker">
-	<input type="checkbox" name="cb_config" id="cb_config" value="Configure" onclick="hide()">
-
-	<label for="cb_config">Configure:</label></br>
+<div  class="container-fluid border-bottom" id="config_div">
+	<input  type="checkbox"  checked="true" name="cb_config" id="cb_config" value="Configure" onclick="hide()">
+	<label for="cb_config">Configure Broker:</label></br>
+</div>
 	<!-- Settings Div -->
 	<div  class="container-fluid border-bottom" id="broker_div"></br>
 		<h2>Broker Settings</h2></br>
@@ -97,7 +98,7 @@
 		<input type="text" name="txt_CLient" id="txt_CLient">
 		<label class="px-1">Subscribe Topic:</label>
 		<input type="text" name="txt_Subscribe" id="txt_Subscribe"></br></br>
-		<input type="button" name="sub_config" id="sub_config" value="Submit" onclick="Host()">
+		<input type="button" name="sub_config" id="sub_config" value="Submit" onclick="Host()"></br></br>
 
 	</div>
 </form>
