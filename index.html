@@ -31,7 +31,7 @@
 
 		// connect the client
 		client.reconnect = true;
-		client.connect({onSuccess: onConnect});
+		client.connect({onSuccess: onConnect, useSSL: true});
 			//, userName: "Marlon", password: "MarlonD1", useSSL: true 
 	}
 	//Triggered when connecting to broker
