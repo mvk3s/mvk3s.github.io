@@ -31,7 +31,7 @@
 
 		// connect the client
 		client.reconnect = true;
-		client.connect({onSuccess: onConnect, userName: "Marlon", password: "MarlonD1"});
+		client.connect({onSuccess: onConnect, userName: "Marlon", password: "MarlonD1", useSSL: true});
 			// 
 	}
 	//Triggered when connecting to broker
@@ -41,6 +41,8 @@
     	console.log("Connected");
     	client.subscribe(topic);//subscribe to Topic. 
     	alert("Connected to broker and subscribed to Topic: " + topic);
+
+
 		
 	}
 
