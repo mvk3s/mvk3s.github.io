@@ -44,8 +44,17 @@
     	client.subscribe(topic);//subscribe to Topic. 
     	alert("Connected to broker and subscribed to Topic: " + topic);
 
-
+    	
 		
+	}
+	//Clear text fields
+	function clearFields()
+	{
+
+    	document.getElementById("texta_Message").value ='';
+    	document.getElementById("texta_DisplayMessage").value ='';
+    	document.getElementById("txt_Publish").value ='';
+
 	}
 
 //Triggered when a message has arrived
@@ -110,7 +119,7 @@
 		<input type="text" class="form-control form-control-sm" name="txt_CLient" id="txt_CLient">
 		<label class="px-1">Subscribe Topic:</label>
 		<input type="text" class="form-control form-control-sm" name="txt_Subscribe" id="txt_Subscribe"></br></br>
-		<input type="button" name="sub_config" id="sub_config" value="Submit" onclick="Host()"></br></br>
+		<input type="button" name="sub_config" id="sub_config" value="Submit" onclick="Host(), clearFields()"></br></br>
 
 	</div>
 </form>
