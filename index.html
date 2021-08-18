@@ -86,6 +86,8 @@
 		var text = pub_Topic + ": " + input + "\n";
 		message = new Paho.MQTT.Message(input);
 		message.destinationName = pub_Topic;
+		message.qos=1;
+		message.retained=true;
 		client.send(message);
 		console.log("message sent");
 		document.getElementById("texta_DisplayMessage").value += text;
