@@ -29,27 +29,32 @@
 
 		// set callback handlers
 		client.onMessageArrived = onMessageArrived;
+		client.onConnectionLost = onConnectionLost;
+		//client.onConnected = onConnected;
 
 
 		// connect the client
-		client.reconnect = true;
-		client.connect({onSuccess: onConnect, useSSL: true});
+		//client.reconnect = true;
+		client.connect({onSuccess: onConnect, onFailure: onFailure, useSSL: true, cleanSession: false, timeout: 3});
 			//, userName: "Marlon", password: "MarlonD1", useSSL: true 
 	}
+
 	//Triggered when connecting to broker
 	function onConnect() {
+		connected_flag=1;
+		
     	// Once a connection has been made, make a subscription and send a message.
     	var topic = document.getElementById("txt_Subscribe").value;
-    	console.log("Connected");
-    	client.subscribe(topic);//subscribe to Topic. 
+    	console.log("subscribed to: " + topic);
+    	client.subscribe(topic,{qos: 1});//subscribe to Topic and QOS. 
     	alert("Connected to broker and subscribed to Topic: " + topic);
 
     	
 		
 	}
+
 	//Clear text fields
-	function clearFields()
-	{
+	function clearFields(){
 
     	document.getElementById("texta_Message").value ='';
     	document.getElementById("texta_DisplayMessage").value ='';
@@ -57,15 +62,25 @@
 
 	}
 
-//Triggered when a message has arrived
+	//Triggered when a message has arrived
 	function onMessageArrived(message) {
     	console.log("onMessageArrived:"+message.destinationName + " " + message.payloadString);
     	var text = message.destinationName + ": " + message.payloadString + "\n";
      	//const data = JSON.parse(message.payloadString);
      	document.getElementById("texta_DisplayMessage").value +=  text;
     }
-//Triggered when a message has arrivedTriggered when a message is sent.
+
+	//Triggered when a message has arrivedTriggered when a message is sent.
     function publishMessage() {
+
+    	if (connected_flag==0){
+		out_msg="Can't send message, disconnected from broker"
+		alert(out_msg);
+		console.log(out_msg);
+		document.getElementById("status_messages").innerHTML = out_msg;
+		return false;
+		}
+
     	var pub_Topic = document.getElementById("txt_Publish").value;
 		var input = document.getElementById("texta_Message").value;
 		var text = pub_Topic + ": " + input + "\n";
@@ -76,9 +91,12 @@
 		document.getElementById("texta_DisplayMessage").value += text;
 		document.getElementById("texta_Message").value =" ";
 	}
+
+	//Disconnect Client from broker
 	function disconnect() {
-		client.disconnect = true;
+		client.disconnect();
 	}
+
 	// Hide or show Settings DIV
 	function hide() {
 		cb = document.getElementById("cb_config");
@@ -90,6 +108,23 @@
 			document.getElementById("broker_div").style.display = "none";
 			//document.getElementById("topics_div").style.display = "none";
 		}
+
+	}
+
+	function onFailure(message) {
+		console.log("Failed");
+		alert("Connection failed try again.");
+        setTimeout(MQTTconnect, reconnectTimeout);
+    }
+
+    function onConnectionLost(){
+	console.log("connection lost");
+	alert("Connection lost.");
+	connected_flag=0;
+	}
+
+	function onConnected(recon,url){
+	console.log("in onConnected " +reconn);
 	}
 </script>
 
