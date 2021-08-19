@@ -83,13 +83,13 @@
 
     	var pub_Topic = document.getElementById("txt_Publish").value;
 		var input = document.getElementById("texta_Message").value;
-		var text = pub_Topic + ": " + input + "\n";
+		var text = pub_Topic + ": " + input + "\n";//Message string for DisplayMessage TextArea.
 		message = new Paho.MQTT.Message(input);
 		message.destinationName = pub_Topic;
 		message.qos=1;
 		message.retained=true;
 		client.send(message);
-		console.log("message sent");
+		console.log("message sent: " + input);
 		document.getElementById("texta_DisplayMessage").value += text;
 		document.getElementById("texta_Message").value =" ";
 	}
