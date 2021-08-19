@@ -64,7 +64,7 @@
 
 	//Triggered when a message has arrived
 	function onMessageArrived(message) {
-    	console.log("onMessageArrived:"+message.destinationName + " " + message.payloadString);
+    	console.log("Message arrived from:"+message.destinationName + " Message: " + message.payloadString);
     	var text = message.destinationName + ": " + message.payloadString + "\n";
      	//const data = JSON.parse(message.payloadString);
      	document.getElementById("texta_DisplayMessage").value +=  text;
