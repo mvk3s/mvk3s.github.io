@@ -46,7 +46,7 @@
     	// Once a connection has been made, make a subscription and send a message.
     	var topic = document.getElementById("txt_Subscribe").value;
     	console.log("subscribed to: " + topic);
-    	client.subscribe(topic,{qos: 1});//subscribe to Topic and QOS. 
+    	client.subscribe(topic,{qos: 2});//subscribe to Topic and QOS. 
     	alert("Connected to broker and subscribed to Topic: " + topic);
 
     	
