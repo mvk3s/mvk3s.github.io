@@ -97,8 +97,15 @@
 
 	//Disconnect Client from broker
 	function disconnect() {
-		console.log("Disconnected");
-		client.disconnect();
+		if(connected_flag==1){
+			console.log("Disconnected");
+			client.disconnect();
+		}
+		else
+		{
+			alert("Client is already disconnected from the broker");
+		}
+		
 		
 	}
 
