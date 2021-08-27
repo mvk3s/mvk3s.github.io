@@ -132,7 +132,26 @@
 		console.log("in onConnected " +reconn);
 	}
 
+
+			// Send message with Enter button press
+			window.addEventListener("keypress",checKeyPress)
 	
+			
+			function checKeyPress(event){
+		
+  				// Number 13 is the "Enter" key on the keyboard
+  				if (event.keyCode == "13" && !event.shiftKey) {
+					console.log("Enter button clicked");
+    				// Cancel the default action of enter button.
+   				 	event.preventDefault();
+    				// Trigger publishMessage Funtion
+    				publishMessage();
+	  			}
+					
+	  		};
+
+	
+
 		
 	
 	
@@ -185,15 +204,6 @@
 
 </body>
 <script type="text/javascript">
-	var input = document.getElementById("texta_Message");
-		input.addEventListener("keydown",function(event){
-  			// Number 13 is the "Enter" key on the keyboard
-  		if (event.key === 13) {
-    		// Cancel the default action, if needed
-   			 event.preventDefault();
-    		// Trigger the button element with a click
-    		document.getElementById("btn_Send").click();
-	  	}
-	  });
+
 </script>
 </html>
