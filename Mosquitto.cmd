@@ -1,0 +1,1 @@
+start cmd /k C:\"Program Files"\Mosquitto\mosquitto.exe -c "C:\Program Files\Mosquitto\mosquitto1.conf" -v"
