@@ -16,6 +16,8 @@
 <script type="text/javascript">
 	var client;
 	connected_flag=0;
+	var today = new Date();
+	var time = today.getHours() + ":" + today.getMinutes();
 
 	function Host() {
 
@@ -67,7 +69,7 @@
 		//recevive JSON string
 		const incomingMessage = JSON.parse(message.payloadString);
     	console.log("Message arrived from:"+message.destinationName + " Message: " + message.payloadString);
-    	var text = message.destinationName + ": " + incomingMessage.SentMessage + "\n";
+    	var text = time +" "+ message.destinationName + ": " + incomingMessage.SentMessage + "\n";
      	//const data = JSON.parse(message.payloadString);
      	document.getElementById("texta_DisplayMessage").value +=  text;
     }
@@ -79,7 +81,7 @@
 		out_msg="Can't send message, disconnected from broker"
 		alert(out_msg);
 		console.log(out_msg);
-		document.getElementById("status_messages").innerHTML = out_msg;
+		//document.getElementById("status_messages").innerHTML = out_msg;
 		return false;
 		}
 
@@ -87,10 +89,10 @@
 		//var input = document.getElementById("texta_Message").value;
 		const input = {"SentMessage": document.getElementById("texta_Message").value};
 		const send = JSON.stringify(input);
-		var text = pub_Topic + ": " + input.SentMessage + "\n";//Message string for DisplayMessage TextArea.
+		var text =  time +" "+ pub_Topic + ": " + input.SentMessage + "\n";//Message string for DisplayMessage TextArea.
 		message = new Paho.MQTT.Message(send);
 		message.destinationName = pub_Topic;
-		message.qos=1;
+		message.qos=2;
 		message.retained=true;
 		
 		client.send(message);
@@ -128,7 +130,7 @@
 	}
 
 	function onFailure(message) {
-		console.log("Failed");
+		console.log(message);
 		alert("Connection failed try again.");
         setTimeout(MQTTconnect, reconnectTimeout);
     }
