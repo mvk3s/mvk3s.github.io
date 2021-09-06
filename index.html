@@ -43,7 +43,7 @@
 	
 		
 		
-		client.connect({onSuccess: onConnect, onFailure: onFailure, useSSL: false, cleanSession: false, timeout: 3, willMessage: last_will});
+		client.connect({onSuccess: onConnect, onFailure: onFailure, useSSL: false, cleanSession: false, timeout: 60, willMessage: last_will});
 			//, userName: "Marlon", password: "MarlonD1", useSSL: true 
 	}
 
@@ -75,19 +75,32 @@
 		//timestamp 
 		var today = new Date();
 	    var time = today.getHours() + ":" + today.getMinutes();
+		
+		
+			
+		try {
+				//recevive JSON payload string
+				const incomingMessage = JSON.parse(message.payloadString);
+    			console.log("Message arrived from:"+message.destinationName + " Message: " + message.payloadString);
+    			var text = time +" "+ message.destinationName + ": " + incomingMessage.SentMessage + "\n";
 
-		//recevive JSON payload string
-		const incomingMessage = JSON.parse(message.payloadString);
-    	console.log("Message arrived from:"+message.destinationName + " Message: " + message.payloadString);
-    	var text = time +" "+ message.destinationName + ": " + incomingMessage.SentMessage + "\n";
+				// Accumalate message in text area  
+     			document.getElementById("texta_DisplayMessage").value +=  text;
+			
+		} catch (error) {
+				alert("Incoming message is not in JSon format");
+				console.log("Message arrived from:"+message.destinationName + " Message: " + message.payloadString + ", is not in JSON format");
+				
+		}
+		
 
-		// Accumalate message in text area  
-     	document.getElementById("texta_DisplayMessage").value +=  text;
+		
+		
     }
 
 	//Triggered when a message has arrivedTriggered when a message is sent.
     function publishMessage() {
-		
+
 		//timestamp
 		var today = new Date();
 	    var time = today.getHours() + ":" + today.getMinutes();
