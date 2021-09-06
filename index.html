@@ -26,8 +26,11 @@
 		const brokerSettings1 = JSON.parse(brokerSettings);
 		console.log(brokerSettings);
 
+		//Last will message
 		var last_will = new Paho.MQTT.Message("Web Chat has Disocnnected");
 		last_will.destinationName = "Web Chat";
+		last_will.qos = 1
+
 		//new mqtt client connection
 		client = new Paho.MQTT.Client(brokerSettings1.Host, Number(brokerSettings1.Port), brokerSettings1.ClientID);
 
@@ -35,8 +38,6 @@
 		client.onMessageArrived = onMessageArrived;
 		client.onConnectionLost = onConnectionLost;
 		//client.onConnected = onConnected;
-
-
 		// connect the client
 		//client.reconnect = true;
 	
@@ -74,16 +75,19 @@
 		//timestamp 
 		var today = new Date();
 	    var time = today.getHours() + ":" + today.getMinutes();
-		//recevive JSON string
+
+		//recevive JSON payload string
 		const incomingMessage = JSON.parse(message.payloadString);
     	console.log("Message arrived from:"+message.destinationName + " Message: " + message.payloadString);
     	var text = time +" "+ message.destinationName + ": " + incomingMessage.SentMessage + "\n";
-     	//const data = JSON.parse(message.payloadString);
+
+		// Accumalate message in text area  
      	document.getElementById("texta_DisplayMessage").value +=  text;
     }
 
 	//Triggered when a message has arrivedTriggered when a message is sent.
     function publishMessage() {
+		
 		//timestamp
 		var today = new Date();
 	    var time = today.getHours() + ":" + today.getMinutes();
