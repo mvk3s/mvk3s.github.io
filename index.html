@@ -90,6 +90,10 @@
 		} catch (error) {
 				alert("Incoming message is not in JSon format");
 				console.log("Message arrived from:"+message.destinationName + " Message: " + message.payloadString + ", is not in JSON format");
+				var text = time +" "+ message.destinationName + ": " + message.payloadString + "\n";
+
+				// Accumalate message in text area  
+     			document.getElementById("texta_DisplayMessage").value +=  text;
 				
 		}
 		
