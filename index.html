@@ -110,27 +110,31 @@
 	    var time = today.getHours() + ":" + today.getMinutes();
 
     	if (connected_flag==0){
-		out_msg="Can't send message, disconnected from broker"
-		alert(out_msg);
-		console.log(out_msg);
-		//document.getElementById("status_messages").innerHTML = out_msg;
-		return false;
+			out_msg="Can't send message, disconnected from broker"
+			alert(out_msg);
+			console.log(out_msg);
+			//document.getElementById("status_messages").innerHTML = out_msg;
+			return false;
 		}
-
-    	var pub_Topic = document.getElementById("txt_Publish").value;
-		//var input = document.getElementById("texta_Message").value;
-		const input = {"SentMessage": document.getElementById("texta_Message").value};
-		const send = JSON.stringify(input);
-		var text =  time +" "+ pub_Topic + ": " + input.SentMessage + "\n";//Message string for DisplayMessage TextArea.
-		message = new Paho.MQTT.Message(send);
-		message.destinationName = pub_Topic;
-		message.qos=2;
-		message.retained=true;
+		else{
+			var pub_Topic = document.getElementById("txt_Publish").value;
+			//var input = document.getElementById("texta_Message").value;
+			const input = {"SentMessage": document.getElementById("texta_Message").value};
+			const send = JSON.stringify(input);
+			var text =  time +" "+ pub_Topic + ": " + input.SentMessage + "\n";//Message string for DisplayMessage TextArea.
+			message = new Paho.MQTT.Message(send);
+			message.destinationName = pub_Topic;
+			message.qos=2;
+			message.retained=true;
 		
-		client.send(message);
-		console.log("message sent: " + send);
-		document.getElementById("texta_DisplayMessage").value += text;
-		document.getElementById("texta_Message").value ="";
+			client.send(message);
+			console.log("message sent: " + send);
+			document.getElementById("texta_DisplayMessage").value += text;
+			document.getElementById("texta_Message").value ="";
+		}
+	
+
+    	
 	}
 
 	//Disconnect Client from broker
@@ -203,7 +207,7 @@
 
 </script>
 
-<body class="bg-socndary">
+<body class="bg-secondary">
 
 		<div class="container-fluid bg-dark bg-gradient text-white navbar-dark align-items-end">
             <h1>CHAT APP</h1> 
@@ -241,8 +245,12 @@
 		<label class="px-0">Publish Topic:</label>
 		<input type="text" class="form-control form-control-sm" name="txt_Publish" id="txt_Publish"></br>
 		<label>Enter Message:</label></br>
-		<textarea class="form-control" id="texta_Message" name="texta_Message" rows="4" cols="50" wrap="soft" ></textarea></br></br>
-		<textarea class="form-control" id="texta_DisplayMessage" name="texta_DisplayMessage" rows="20" cols="50" wrap="soft" readonly></textarea></br></br>
+		<textarea class="form-control" id="texta_Message" name="texta_Message" rows="4" cols="50" wrap="soft" ></textarea></br>
+		<div class="custom-file">
+			<input type="file" class="custom-file-input" id="customFile" accept="image/*">
+			<label class="custom-file-label" for="customFile">Choose file</label>
+		</div></br>
+		<textarea class="form-control" id="texta_DisplayMessage" name="texta_DisplayMessage" rows="16" cols="50" wrap="soft" readonly></textarea></br></br>
 		<input type="button" name="btn_Send" id="btn_Send" value="Send Message" onclick="publishMessage()">
 		<input type="button" name="btn_Disconnect" id="btn_Disconnect" value="Disconnect" onclick="disconnect()"></br>
 	</div></br>
