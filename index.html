@@ -19,17 +19,19 @@
 	
 
 	function Host() {
-
-		//broker settings in JSON format
+		try{
+			//broker settings in JSON format
 		var broker = {"Host": document.getElementById("txt_Host").value, "Port": document.getElementById("txt_Port").value, "ClientID": document.getElementById("txt_CLient").value};
 		const brokerSettings = JSON.stringify(broker);
 		const brokerSettings1 = JSON.parse(brokerSettings);
 		console.log(brokerSettings);
 
 		//Last will message
-		var last_will = new Paho.MQTT.Message("Web Chat has Disocnnected");
+		const input = {"SentMessage": document.getElementById("txt_CLient").value + " has disconnected"};
+		const send = JSON.stringify(input);
+		var last_will = new Paho.MQTT.Message(send);
 		last_will.destinationName = "Web Chat";
-		last_will.qos = 1
+		last_will.qos = 2
 
 		//new mqtt client connection
 		client = new Paho.MQTT.Client(brokerSettings1.Host, Number(brokerSettings1.Port), brokerSettings1.ClientID);
@@ -45,6 +47,11 @@
 		
 		client.connect({onSuccess: onConnect, onFailure: onFailure, useSSL: false, cleanSession: false, timeout: 60, willMessage: last_will});
 			//, userName: "Marlon", password: "MarlonD1", useSSL: true 
+		}
+		catch(error){
+			alert(error.message);
+		}
+		
 	}
 
 	//Triggered when connecting to broker
@@ -86,7 +93,7 @@
 
 				// Accumalate message in text area  
      			document.getElementById("texta_DisplayMessage").value +=  text;
-			
+				document.getElementById("image").value = incomingMessage.Image;
 		} catch (error) {
 				alert("Incoming message is not in JSon format");
 				console.log("Message arrived from:"+message.destinationName + " Message: " + message.payloadString + ", is not in JSON format");
@@ -117,9 +124,12 @@
 			return false;
 		}
 		else{
+			
+		
+
 			var pub_Topic = document.getElementById("txt_Publish").value;
 			//var input = document.getElementById("texta_Message").value;
-			const input = {"SentMessage": document.getElementById("texta_Message").value};
+			const input = {"SentMessage": document.getElementById("texta_Message").value,"Image": document.getElementById("image").value};
 			const send = JSON.stringify(input);
 			var text =  time +" "+ pub_Topic + ": " + input.SentMessage + "\n";//Message string for DisplayMessage TextArea.
 			message = new Paho.MQTT.Message(send);
@@ -198,6 +208,11 @@
 	  			}
 					
 	  		};
+			  
+			function loadPicture(event){
+				var picture = document.getElementById("image");
+				picture.src = URL.createObjectURL(event.target.files[0]);
+			};
 
 	
 
@@ -247,8 +262,9 @@
 		<label>Enter Message:</label></br>
 		<textarea class="form-control" id="texta_Message" name="texta_Message" rows="4" cols="50" wrap="soft" ></textarea></br>
 		<div class="custom-file">
-			<input type="file" class="custom-file-input" id="customFile" accept="image/*">
+			<input type="file" class="custom-file-input" id="customFile" accept="image/*" onchange="loadPicture(event)">
 			<label class="custom-file-label" for="customFile">Choose file</label>
+			<img class="img-thumbnail" id="image"/>
 		</div></br>
 		<textarea class="form-control" id="texta_DisplayMessage" name="texta_DisplayMessage" rows="16" cols="50" wrap="soft" readonly></textarea></br></br>
 		<input type="button" name="btn_Send" id="btn_Send" value="Send Message" onclick="publishMessage()">
