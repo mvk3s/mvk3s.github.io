@@ -46,7 +46,7 @@
 	
 		
 		
-		client.connect({onSuccess: onConnect, onFailure: onFailure, useSSL: false, cleanSession: false, timeout: 60, willMessage: last_will});
+		client.connect({onSuccess: onConnect, onFailure: onFailure, useSSL: true, cleanSession: false, timeout: 60, willMessage: last_will});
 			//, userName: "Marlon", password: "MarlonD1", useSSL: true 
 		}
 		catch(error){
