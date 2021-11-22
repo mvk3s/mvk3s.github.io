@@ -94,7 +94,7 @@
 
 			// Accumalate message in text area  
      		document.getElementById("texta_DisplayMessage").value +=  text;
-			document.getElementById("image").value = convertBase64Image();
+			document.getElementById("image").value = incomingMessage.Image;
 		} catch (error) {
 			alert("Incoming message is not in JSon format");
 			console.log("Message arrived from:"+message.destinationName + " Message: " + message.payloadString + ", is not in JSON format");
@@ -102,6 +102,7 @@
 
 			// Accumalate message in text area  
      		document.getElementById("texta_DisplayMessage").value +=  text;
+			document.getElementById("image") = incomingMessage.Image;
 				
 		}
 		
@@ -130,7 +131,7 @@
 
 			var pub_Topic = document.getElementById("txt_Publish").value;
 			//var input = document.getElementById("texta_Message").value;
-			const input = {"SentMessage": document.getElementById("texta_Message").value,"Image": getBase64Image()};//document.getElementById("image").value};
+			const input = {"SentMessage": document.getElementById("texta_Message").value,"Image": document.getElementById("image")};//document.getElementById("image").value};
 			const send = JSON.stringify(input);
 			var text =  time +" "+ pub_Topic + ": " + input.SentMessage + "\n";//Message string for DisplayMessage TextArea.
 			message = new Paho.MQTT.Message(send);
