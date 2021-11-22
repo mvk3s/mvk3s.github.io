@@ -208,6 +208,11 @@
     		// Trigger publishMessage Funtion
     		publishMessage();
 	  	}
+		else if(event.keyCode == "13" && event.shiftKey){
+			document.getElementById("texta_Message").value += '\n';
+			console.log("New line");
+
+		} 
 					
 	};
 			  
